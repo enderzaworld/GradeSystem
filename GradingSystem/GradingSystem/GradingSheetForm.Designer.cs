@@ -190,6 +190,7 @@
             this.dgvBQA = new System.Windows.Forms.DataGridView();
             this.dgvGIG = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel43.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -266,6 +267,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvBPTWS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBQA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGIG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -463,6 +465,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.Controls.Add(this.panel2, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.dataGridView1, 3, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -2310,8 +2313,21 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 500;
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(751, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 27);
+            this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.Visible = false;
             // 
             // GradingSheetForm
             // 
@@ -2444,6 +2460,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvBPTWS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBQA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGIG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2611,5 +2628,6 @@
         private System.Windows.Forms.Panel panel44;
         private System.Windows.Forms.Label lbl_grade;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

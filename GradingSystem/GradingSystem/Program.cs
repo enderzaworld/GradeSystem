@@ -156,7 +156,8 @@ namespace GradingSystem
 
             for (int x = 0; x < arr2d.GetLength(0); x++)
                 for (int i = 0; i < arr2d.GetLength(1); i++)
-                    arr2d[x, i] = safeParse(v.Rows[x].Cells[i].Value.ToString()); 
+                    try { arr2d[x, i] = safeParse(v.Rows[x].Cells[i].Value.ToString()); }
+                    catch { arr2d[x, i] = 0; }
             return arr2d;
         }
 
@@ -179,5 +180,17 @@ namespace GradingSystem
                 v.Rows.Add(row);
             }
         }
+
+        static public void doNonQuery(String sql)
+        {
+
+            db_connection();
+            cmd.CommandText = sql;
+            Console.WriteLine(sql);
+            cmd.Connection = connect;
+            cmd.ExecuteNonQuery();
+            connect.Close();
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Threading;
 
 namespace GradingSystem
 {
@@ -232,48 +233,36 @@ namespace GradingSystem
         private void loadMale()
         {
             dgvBName.DataSource = GetSNameMale();
-            resizeDGV(dgvBName,100);
-
             dgvBWW.DataSource = GetWScoreMale();
-            checkData(dgvBName, dgvBWW);
-            resizeDGV(dgvBWW);
-
             dgvBPT.DataSource = GetPScoreMale();
-            checkData(dgvBName, dgvBPT);
-            resizeDGV(dgvBPT);
-
             dgvBQA.DataSource = GetQScoreMale();
-            checkData(dgvBName, dgvBQA,1);
+            resizeDGV(dgvBName,100);
+            resizeDGV(dgvBWW);
+            resizeDGV(dgvBPT);
             resizeDGV(dgvBQA);
         }
 
         private void loadFemale()
         {
             dgvGName.DataSource = GetSNameFemale();
+            dgvGWW.DataSource = GetWScoreFemale();
+            dgvGPT.DataSource = GetPScoreFemale();
+            dgvGQA.DataSource = GetQScoreFemale();
             resizeDGV(dgvGName, 100);
             resizeRow(dgvBName, 0, dgvGName, 2);
-
-            dgvGWW.DataSource = GetWScoreFemale();
-            checkData(dgvGName, dgvGWW);
             resizeDGV(dgvGWW);
-
-            dgvGPT.DataSource = GetPScoreFemale();
-            checkData(dgvGName, dgvGPT);
             resizeDGV(dgvGPT);
-
-            dgvGQA.DataSource = GetQScoreFemale();
-            checkData(dgvGName, dgvGQA, 1);
             resizeDGV(dgvGQA);
         }
 
         private void checkData(DataGridView refDGV, DataGridView checkDGV,int len=9)
         {
-            float[,] refe = Program.getFloat2dArray(refDGV);
-            float[,] data = Program.getFloat2dArray(checkDGV);
+            float[,] refe = getFloat2dArray(refDGV);
+            float[,] data = getFloat2dArray(checkDGV);
             if (data.GetLength(0) == 0 && refe.GetLength(0) > 0)
             {
                 data = new float[refe.GetLength(0), len];
-                setDataToGridView(ref checkDGV, data);
+                setDataToGridView(checkDGV, data);
             }else
             if (data.GetLength(0) != refe.GetLength(0))
             {
@@ -281,8 +270,8 @@ namespace GradingSystem
                 data = new float[refe.GetLength(0), len];
                 for (int i = 0; i < tempData.GetLength(0); i++)
                     for (int x = 0; x < tempData.GetLength(1); x++)
-                        data[i, x] = tempData[i,x];
-                setDataToGridView(ref checkDGV, data);
+                        try { data[i, x] = tempData[i, x]; } catch { }
+                setDataToGridView(checkDGV, data);
             }
         }
 
@@ -432,65 +421,65 @@ namespace GradingSystem
                 nums[7] = Program.safeParse(txtbx_p8.Text);
                 txtbx_pT.Text = Program.sum(nums).ToString();
                 //boys computation
-                float[,] arrBWW = Program.getFloat2dArray(dgvBWW);
-                float[,] arrBWWPS = new float[arrBWW.GetLength(0), 1];//Program.getFloat2dArray(dgvBWWPS);
-                float[,] arrBWWWS = new float[arrBWW.GetLength(0), 1];//Program.getFloat2dArray(dgvBWWWS);
+                float[,] arrBWW = getFloat2dArray(dgvBWW);
+                float[,] arrBWWPS = new float[arrBWW.GetLength(0), 1];//getFloat2dArray(dgvBWWPS);
+                float[,] arrBWWWS = new float[arrBWW.GetLength(0), 1];//getFloat2dArray(dgvBWWWS);
                 computeThis(ref arrBWW, ref arrBWWPS, ref arrBWWWS, txtbx_wT.Text, WrittenWorkPercent);
-                setDataToGridView(ref dgvBWW, arrBWW);
-                setDataToGridView(ref dgvBWWPS, arrBWWPS);
-                setDataToGridView(ref dgvBWWWS, arrBWWWS);
+                setDataToGridView(dgvBWW, arrBWW);
+                setDataToGridView(dgvBWWPS, arrBWWPS);
+                setDataToGridView(dgvBWWWS, arrBWWWS);
 
-                float[,] arrBPT = Program.getFloat2dArray(dgvBPT);
-                float[,] arrBPTPS = new float[arrBPT.GetLength(0), 1];//Program.getFloat2dArray(dgvBPTPS);
-                float[,] arrBPTWS = new float[arrBPT.GetLength(0), 1];//Program.getFloat2dArray(dgvBPTWS);
+                float[,] arrBPT = getFloat2dArray(dgvBPT);
+                float[,] arrBPTPS = new float[arrBPT.GetLength(0), 1];//getFloat2dArray(dgvBPTPS);
+                float[,] arrBPTWS = new float[arrBPT.GetLength(0), 1];//getFloat2dArray(dgvBPTWS);
                 computeThis(ref arrBPT, ref arrBPTPS, ref arrBPTWS, txtbx_pT.Text, PerformancePercent);
-                setDataToGridView(ref dgvBPT, arrBPT);
-                setDataToGridView(ref dgvBPTPS, arrBPTPS);
-                setDataToGridView(ref dgvBPTWS, arrBPTWS);
+                setDataToGridView(dgvBPT, arrBPT);
+                setDataToGridView(dgvBPTPS, arrBPTPS);
+                setDataToGridView(dgvBPTWS, arrBPTWS);
 
-                float[,] arrBQA = Program.getFloat2dArray(dgvBQA);
-                float[,] arrBQAPS = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQAPS);
-                float[,] arrBQAWS = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQAWS);
+                float[,] arrBQA = getFloat2dArray(dgvBQA);
+                float[,] arrBQAPS = new float[arrBQA.GetLength(0), 1];//getFloat2dArray(dgvBQAPS);
+                float[,] arrBQAWS = new float[arrBQA.GetLength(0), 1];//getFloat2dArray(dgvBQAWS);
                 computeThis(ref arrBQA, ref arrBQAPS, ref arrBQAWS, txtbx_qT.Text, QuarterlyPercent);
-                setDataToGridView(ref dgvBQA, arrBQA);
-                setDataToGridView(ref dgvBQAPS, arrBQAPS);
-                setDataToGridView(ref dgvBQAWS, arrBQAWS);
+                setDataToGridView(dgvBQA, arrBQA);
+                setDataToGridView(dgvBQAPS, arrBQAPS);
+                setDataToGridView(dgvBQAWS, arrBQAWS);
 
-                float[,] arrBIG = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBIG);
-                float[,] arrBQG = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQG);
+                float[,] arrBIG = new float[arrBQA.GetLength(0), 1];//getFloat2dArray(dgvBIG);
+                float[,] arrBQG = new float[arrBQA.GetLength(0), 1];//getFloat2dArray(dgvBQG);
                 computeFinalGrade(arrBWWWS, arrBPTWS, arrBQAWS, ref arrBIG, ref arrBQG);
-                setDataToGridView(ref dgvBIG, arrBIG);
-                setDataToGridView(ref dgvBQG, arrBQG, 500, 500);
+                setDataToGridView(dgvBIG, arrBIG);
+                setDataToGridView(dgvBQG, arrBQG, 500, 500);
                 //girls computation
-                float[,] arrGWW = Program.getFloat2dArray(dgvGWW);
-                float[,] arrGWWPS = new float[arrGWW.GetLength(0), 1];//Program.getFloat2dArray(dgvGWWPS);
-                float[,] arrGWWWS = new float[arrGWW.GetLength(0), 1];//Program.getFloat2dArray(dgvGWWWS);
+                float[,] arrGWW = getFloat2dArray(dgvGWW);
+                float[,] arrGWWPS = new float[arrGWW.GetLength(0), 1];//getFloat2dArray(dgvGWWPS);
+                float[,] arrGWWWS = new float[arrGWW.GetLength(0), 1];//getFloat2dArray(dgvGWWWS);
                 computeThis(ref arrGWW, ref arrGWWPS, ref arrGWWWS, txtbx_wT.Text, WrittenWorkPercent);
-                setDataToGridView(ref dgvGWW, arrGWW);
-                setDataToGridView(ref dgvGWWPS, arrGWWPS);
-                setDataToGridView(ref dgvGWWWS, arrGWWWS);
+                setDataToGridView(dgvGWW, arrGWW);
+                setDataToGridView(dgvGWWPS, arrGWWPS);
+                setDataToGridView(dgvGWWWS, arrGWWWS);
 
-                float[,] arrGPT = Program.getFloat2dArray(dgvGPT);
-                float[,] arrGPTPS = new float[arrGPT.GetLength(0), 1];//Program.getFloat2dArray(dgvGPTPS);
-                float[,] arrGPTWS = new float[arrGPT.GetLength(0), 1];//Program.getFloat2dArray(dgvGPTWS);
+                float[,] arrGPT = getFloat2dArray(dgvGPT);
+                float[,] arrGPTPS = new float[arrGPT.GetLength(0), 1];//getFloat2dArray(dgvGPTPS);
+                float[,] arrGPTWS = new float[arrGPT.GetLength(0), 1];//getFloat2dArray(dgvGPTWS);
                 computeThis(ref arrGPT, ref arrGPTPS, ref arrGPTWS, txtbx_pT.Text, PerformancePercent);
-                setDataToGridView(ref dgvGPT, arrGPT);
-                setDataToGridView(ref dgvGPTPS, arrGPTPS);
-                setDataToGridView(ref dgvGPTWS, arrGPTWS);
+                setDataToGridView(dgvGPT, arrGPT);
+                setDataToGridView(dgvGPTPS, arrGPTPS);
+                setDataToGridView(dgvGPTWS, arrGPTWS);
 
-                float[,] arrGQA = Program.getFloat2dArray(dgvGQA);
-                float[,] arrGQAPS = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQAPS);
-                float[,] arrGQAWS = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQAWS);
+                float[,] arrGQA = getFloat2dArray(dgvGQA);
+                float[,] arrGQAPS = new float[arrGQA.GetLength(0), 1];//getFloat2dArray(dgvGQAPS);
+                float[,] arrGQAWS = new float[arrGQA.GetLength(0), 1];//getFloat2dArray(dgvGQAWS);
                 computeThis(ref arrGQA, ref arrGQAPS, ref arrGQAWS, txtbx_qT.Text, QuarterlyPercent);
-                setDataToGridView(ref dgvGQA, arrGQA);
-                setDataToGridView(ref dgvGQAPS, arrGQAPS);
-                setDataToGridView(ref dgvGQAWS, arrGQAWS);
+                setDataToGridView(dgvGQA, arrGQA);
+                setDataToGridView(dgvGQAPS, arrGQAPS);
+                setDataToGridView(dgvGQAWS, arrGQAWS);
 
-                float[,] arrGIG = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGIG);
-                float[,] arrGQG = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQG);
+                float[,] arrGIG = new float[arrGQA.GetLength(0), 1];//getFloat2dArray(dgvGIG);
+                float[,] arrGQG = new float[arrGQA.GetLength(0), 1];//getFloat2dArray(dgvGQG);
                 computeFinalGrade(arrGWWWS, arrGPTWS, arrGQAWS, ref arrGIG, ref arrGQG);
-                setDataToGridView(ref dgvGIG, arrGIG);
-                setDataToGridView(ref dgvGQG, arrGQG, 500, 500);
+                setDataToGridView(dgvGIG, arrGIG);
+                setDataToGridView(dgvGQG, arrGQG, 500, 500);
             }
         }
 
@@ -532,7 +521,7 @@ namespace GradingSystem
 
         }
 
-        public void setDataToGridView(ref DataGridView v, float[,] data,int defaultSize = 50,int lastSize = 100)
+        public void setDataToGridView(DataGridView v, float[,] data,int defaultSize = 50,int lastSize = 100)
         {
             v.DataSource = new float[data.GetLength(0), data.GetLength(1)];
             v.DataSource = null;
@@ -560,22 +549,193 @@ namespace GradingSystem
             manageCompute(sender, e);
         }
 
-        private void manageCompute(object sender, DataGridViewCellEventArgs e)
+        static public float[,] getFloat2dArray(DataGridView v)
         {
+            float[,] arr2d = new float[v.Rows.Count, v.Columns.Count];
+
+            for (int x = 0; x < arr2d.GetLength(0); x++)
+                for (int i = 0; i < arr2d.GetLength(1); i++)
+                    arr2d[x, i] = Program.safeParse(v.Rows[x].Cells[i].Value.ToString()); 
+            return arr2d;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            float[] arrWWT = new float[8];
+            arrWWT[0] = Program.safeParse(txtbx_w1.Text);
+            arrWWT[1] = Program.safeParse(txtbx_w2.Text);
+            arrWWT[2] = Program.safeParse(txtbx_w3.Text);
+            arrWWT[3] = Program.safeParse(txtbx_w4.Text);
+            arrWWT[4] = Program.safeParse(txtbx_w5.Text);
+            arrWWT[5] = Program.safeParse(txtbx_w6.Text);
+            arrWWT[6] = Program.safeParse(txtbx_w7.Text);
+            arrWWT[7] = Program.safeParse(txtbx_w8.Text);
 
+            float[] arrPTT = new float[8];
+            arrPTT[0] = Program.safeParse(txtbx_p1.Text);
+            arrPTT[1] = Program.safeParse(txtbx_p2.Text);
+            arrPTT[2] = Program.safeParse(txtbx_p3.Text);
+            arrPTT[3] = Program.safeParse(txtbx_p4.Text);
+            arrPTT[4] = Program.safeParse(txtbx_p5.Text);
+            arrPTT[5] = Program.safeParse(txtbx_p6.Text);
+            arrPTT[6] = Program.safeParse(txtbx_p7.Text);
+            arrPTT[7] = Program.safeParse(txtbx_p8.Text);
+
+            float arrQAT = Program.safeParse(txtbx_qT.Text);
+
+            //boys data
+            float[,] arrBWW = getFloat2dArray(dgvBWW);
+            float[,] arrBPT = getFloat2dArray(dgvBPT);
+            float[,] arrBQA = getFloat2dArray(dgvBQA);
+            //girls data
+            float[,] arrGWW = getFloat2dArray(dgvGWW);
+            float[,] arrGPT = getFloat2dArray(dgvGPT);
+            float[,] arrGQA = getFloat2dArray(dgvGQA);
+
+            //boys in
+            dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Male' AND `student_Level` like 'Grade 8' AND `student_Section` = 'Section 1' ");
+
+            float[,] arr = getFloat2dArray(dataGridView1);
+            String toDelete = "DELETE FROM `student_ww` WHERE `student_ID` IN (";
+            for (int r=0; r<arr.GetLength(0) ;r++)
+            {
+                if (r + 1 >= arr.GetLength(0)){ toDelete += arr[r,0]+""; }
+                else { toDelete += arr[r, 0]+","; }
+            }
+            toDelete+= ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if(arr.GetLength(0)>0) Program.doNonQuery(toDelete);
+            String sql;
+            for (int r = 0; r < arr.GetLength(0); r++){
+                sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) "+
+"VALUES('"+arr[r,0]+"', '"+ arrBWW[r,0]+ "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject+"', '"+quarter+"')";
+                Program.doNonQuery(sql);
+            }
+            sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
+            Program.doNonQuery(sql);
+            //----------------------------------------------------
+            toDelete = "DELETE FROM `student_perf` WHERE `student_ID` IN (";
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                if (r + 1 >= arr.GetLength(0)) { toDelete += arr[r, 0] + ""; }
+                else { toDelete += arr[r, 0] + ","; }
+            }
+            toDelete += ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if (arr.GetLength(0) > 0) Program.doNonQuery(toDelete);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[r, 0] + "', '" + arrBWW[r, 0] + "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject + "', '" + quarter + "')";
+                Program.doNonQuery(sql);
+            }
+            sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
+            Program.doNonQuery(sql);//-----------------------------------------
+            //----------------------------------------------------
+            toDelete = "DELETE FROM `student_qa` WHERE `student_ID` IN (";
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                if (r + 1 >= arr.GetLength(0)) { toDelete += arr[r, 0] + ""; }
+                else { toDelete += arr[r, 0] + ","; }
+            }
+            toDelete += ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if (arr.GetLength(0) > 0) Program.doNonQuery(toDelete);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
+"VALUES('" + arr[r, 0] + "', '" + arrBQA[r, 0]+"','" + Subject + "', '" + quarter + "')";
+                Program.doNonQuery(sql);
+            }
+            sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
+"VALUES('" + arr[0, 0] + "', '" + arrQAT + "','" + Subject + "', '" + quarter + "')";
+            Program.doNonQuery(sql);//-----------------------------------------
+
+            //girls in
+            dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Male' AND `student_Level` like 'Grade 8' AND `student_Section` = 'Section 1' ");
+            arr = getFloat2dArray(dataGridView1);
+            toDelete = "DELETE FROM `student_ww` WHERE `student_ID` IN (";
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                if (r + 1 >= arr.GetLength(0)) { toDelete += arr[r, 0] + ""; }
+                else { toDelete += arr[r, 0] + ","; }
+            }
+            toDelete += ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if (arr.GetLength(0) > 0) Program.doNonQuery(toDelete);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[r, 0] + "', '" + arrBWW[r, 0] + "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject + "', '" + quarter + "')";
+                Program.doNonQuery(sql);
+            }
+            sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
+            Program.doNonQuery(sql);
+            //----------------------------------------------------
+            toDelete = "DELETE FROM `student_perf` WHERE `student_ID` IN (";
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                if (r + 1 >= arr.GetLength(0)) { toDelete += arr[r, 0] + ""; }
+                else { toDelete += arr[r, 0] + ","; }
+            }
+            toDelete += ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if (arr.GetLength(0) > 0) Program.doNonQuery(toDelete);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[r, 0] + "', '" + arrBWW[r, 0] + "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject + "', '" + quarter + "')";
+                Program.doNonQuery(sql);
+            }
+            sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
+            Program.doNonQuery(sql);//-----------------------------------------
+            //----------------------------------------------------
+            toDelete = "DELETE FROM `student_qa` WHERE `student_ID` IN (";
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                if (r + 1 >= arr.GetLength(0)) { toDelete += arr[r, 0] + ""; }
+                else { toDelete += arr[r, 0] + ","; }
+            }
+            toDelete += ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if (arr.GetLength(0) > 0) Program.doNonQuery(toDelete);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
+"VALUES('" + arr[r, 0] + "', '" + arrBQA[r, 0] + "','" + Subject + "', '" + quarter + "')";
+                Program.doNonQuery(sql);
+            }
+            sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
+"VALUES('" + arr[0, 0] + "', '" + arrQAT + "','" + Subject + "', '" + quarter + "')";
+            Program.doNonQuery(sql);//-----------------------------------------
+
+            MessageBox.Show("Saved I suppose this is from line 714 at GradingSheetForm.cs and I Just lost most of my life here");
         }
-        private Boolean dis = false;
-        private Boolean fdis = false;
+
+        private Boolean dis = true;
+        private Boolean fdis = true;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (!fdis) {
                 dis = false;
-                ((Timer)sender).Enabled = false;
-            }else
+                timer1.Enabled = false;
+                checkData(dgvBName, dgvBWW, 9);
+                resizeDGV(dgvBWW);
+                
+                checkData(dgvBName, dgvBPT, 9);
+                resizeDGV(dgvBPT);
+                
+                checkData(dgvBName, dgvBQA, 1);
+                resizeDGV(dgvBQA);
+
+                checkData(dgvGName, dgvGWW, 9);
+                resizeDGV(dgvGWW);
+                
+                checkData(dgvGName, dgvGPT, 9);
+                resizeDGV(dgvGPT);
+                
+                checkData(dgvGName, dgvGQA, 1);
+                resizeDGV(dgvGQA);
+            }
+            else
             {
                 fdis = false;
             }
