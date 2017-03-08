@@ -57,3 +57,24 @@ D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\Gradi
 D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FacultyListForm.resources
 D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ListForm.resources
 D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.StudentListForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe.config
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.exe
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.pdb
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.pdb
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csprojResolveAssemblyReference.cache
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddTeacherForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AuditTrailForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ClassSchedForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FacultyListForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FinalRatingForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradesForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradingSheetForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ListForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.LoginForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.MainForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.Properties.Resources.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.StudentListForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.TeacherLoadingForm.resources
+C:\Users\Imba Gamer\Documents\GitHub\GradeSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csproj.GenerateResource.Cache

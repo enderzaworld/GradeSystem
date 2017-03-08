@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel43 = new System.Windows.Forms.Panel();
             this.btn_print = new System.Windows.Forms.Button();
@@ -188,6 +189,7 @@
             this.dgvBPTWS = new System.Windows.Forms.DataGridView();
             this.dgvBQA = new System.Windows.Forms.DataGridView();
             this.dgvGIG = new System.Windows.Forms.DataGridView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel43.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -332,7 +334,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 251F));
             this.tableLayoutPanel3.Controls.Add(this.panel44, 3, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel42, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel4, 2, 0);
@@ -350,7 +352,7 @@
             // 
             this.panel44.Controls.Add(this.quarterCmBx);
             this.panel44.Controls.Add(this.button2);
-            this.panel44.Location = new System.Drawing.Point(720, 3);
+            this.panel44.Location = new System.Drawing.Point(719, 3);
             this.panel44.Name = "panel44";
             this.panel44.Size = new System.Drawing.Size(374, 30);
             this.panel44.TabIndex = 2;
@@ -406,7 +408,7 @@
             // 
             this.panel4.Controls.Add(this.lblSubject);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(629, 3);
+            this.panel4.Location = new System.Drawing.Point(628, 3);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(85, 30);
             this.panel4.TabIndex = 1;
@@ -425,9 +427,9 @@
             // 
             this.panel5.Controls.Add(this.lblGradelvl);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(1100, 3);
+            this.panel5.Location = new System.Drawing.Point(1099, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(245, 30);
+            this.panel5.Size = new System.Drawing.Size(246, 30);
             this.panel5.TabIndex = 2;
             // 
             // lblGradelvl
@@ -447,7 +449,7 @@
             this.lbl_grade.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_grade.Location = new System.Drawing.Point(103, 0);
             this.lbl_grade.Name = "lbl_grade";
-            this.lbl_grade.Size = new System.Drawing.Size(520, 36);
+            this.lbl_grade.Size = new System.Drawing.Size(519, 36);
             this.lbl_grade.TabIndex = 3;
             this.lbl_grade.Text = "Grade 0";
             this.lbl_grade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1901,7 +1903,7 @@
             this.dgvGQA.Size = new System.Drawing.Size(65, 95);
             this.dgvGQA.TabIndex = 42;
             this.dgvGQA.BackgroundColorChanged += new System.EventHandler(this.manageCompute);
-            this.dgvGQA.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.manageCompute);
+            this.dgvGQA.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBWW_CellValueChanged);
             // 
             // dgvGPTWS
             // 
@@ -1949,7 +1951,7 @@
             this.dgvGPT.RowHeadersVisible = false;
             this.dgvGPT.Size = new System.Drawing.Size(465, 95);
             this.dgvGPT.TabIndex = 39;
-            this.dgvGPT.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGPT_CellValueChanged);
+            this.dgvGPT.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBWW_CellValueChanged);
             // 
             // dgvGWWWS
             // 
@@ -2141,7 +2143,7 @@
             this.dgvGWW.RowHeadersVisible = false;
             this.dgvGWW.Size = new System.Drawing.Size(465, 95);
             this.dgvGWW.TabIndex = 5;
-            this.dgvGWW.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGPT_CellValueChanged);
+            this.dgvGWW.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBWW_CellValueChanged);
             // 
             // dgvBWW
             // 
@@ -2162,7 +2164,7 @@
             this.dgvBWW.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvBWW.Size = new System.Drawing.Size(465, 50);
             this.dgvBWW.TabIndex = 3;
-            this.dgvBWW.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGPT_CellValueChanged);
+            this.dgvBWW.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBWW_CellValueChanged);
             // 
             // dgvBWWPS
             // 
@@ -2225,7 +2227,7 @@
             this.dgvBPT.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvBPT.Size = new System.Drawing.Size(465, 50);
             this.dgvBPT.TabIndex = 9;
-            this.dgvBPT.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGPT_CellValueChanged);
+            this.dgvBPT.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBWW_CellValueChanged);
             // 
             // dgvBPTPS
             // 
@@ -2289,7 +2291,7 @@
             this.dgvBQA.Size = new System.Drawing.Size(65, 50);
             this.dgvBQA.TabIndex = 12;
             this.dgvBQA.BackgroundColorChanged += new System.EventHandler(this.manageCompute);
-            this.dgvBQA.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.manageCompute);
+            this.dgvBQA.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBWW_CellValueChanged);
             // 
             // dgvGIG
             // 
@@ -2306,6 +2308,11 @@
             this.dgvGIG.RowHeadersVisible = false;
             this.dgvGIG.Size = new System.Drawing.Size(100, 95);
             this.dgvGIG.TabIndex = 45;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // GradingSheetForm
             // 
@@ -2604,5 +2611,6 @@
         private System.Windows.Forms.Button btn_print;
         private System.Windows.Forms.Panel panel44;
         private System.Windows.Forms.Label lbl_grade;
+        private System.Windows.Forms.Timer timer1;
     }
 }

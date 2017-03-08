@@ -409,86 +409,88 @@ namespace GradingSystem
         }
 
         private void manageCompute(object sender, EventArgs e) {
-            float[] nums = new float[8];
-            nums[0] = Program.safeParse(txtbx_w1.Text);
-            nums[1] = Program.safeParse(txtbx_w2.Text);
-            nums[2] = Program.safeParse(txtbx_w3.Text);
-            nums[3] = Program.safeParse(txtbx_w4.Text);
-            nums[4] = Program.safeParse(txtbx_w5.Text);
-            nums[5] = Program.safeParse(txtbx_w6.Text);
-            nums[6] = Program.safeParse(txtbx_w7.Text);
-            nums[7] = Program.safeParse(txtbx_w8.Text);
-            txtbx_wT.Text = Program.sum(nums).ToString();
+            if (!dis) {
+                float[] nums = new float[8];
+                nums[0] = Program.safeParse(txtbx_w1.Text);
+                nums[1] = Program.safeParse(txtbx_w2.Text);
+                nums[2] = Program.safeParse(txtbx_w3.Text);
+                nums[3] = Program.safeParse(txtbx_w4.Text);
+                nums[4] = Program.safeParse(txtbx_w5.Text);
+                nums[5] = Program.safeParse(txtbx_w6.Text);
+                nums[6] = Program.safeParse(txtbx_w7.Text);
+                nums[7] = Program.safeParse(txtbx_w8.Text);
+                txtbx_wT.Text = Program.sum(nums).ToString();
 
-            nums[0] = Program.safeParse(txtbx_p1.Text);
-            nums[1] = Program.safeParse(txtbx_p2.Text);
-            nums[2] = Program.safeParse(txtbx_p3.Text);
-            nums[3] = Program.safeParse(txtbx_p4.Text);
-            nums[4] = Program.safeParse(txtbx_p5.Text);
-            nums[5] = Program.safeParse(txtbx_p6.Text);
-            nums[6] = Program.safeParse(txtbx_p7.Text);
-            nums[7] = Program.safeParse(txtbx_p8.Text);
-            txtbx_pT.Text = Program.sum(nums).ToString();
-            //boys computation
-            float[,] arrBWW = Program.getFloat2dArray(dgvBWW);
-            float[,] arrBWWPS = new float[arrBWW.GetLength(0), 1];//Program.getFloat2dArray(dgvBWWPS);
-            float[,] arrBWWWS = new float[arrBWW.GetLength(0), 1];//Program.getFloat2dArray(dgvBWWWS);
-            computeThis(ref arrBWW, ref arrBWWPS, ref arrBWWWS, txtbx_wT.Text, WrittenWorkPercent);
-            setDataToGridView(ref dgvBWW, arrBWW);
-            setDataToGridView(ref dgvBWWPS, arrBWWPS);
-            setDataToGridView(ref dgvBWWWS, arrBWWWS);
-            
-            float[,] arrBPT = Program.getFloat2dArray(dgvBPT);
-            float[,] arrBPTPS = new float[arrBPT.GetLength(0), 1];//Program.getFloat2dArray(dgvBPTPS);
-            float[,] arrBPTWS = new float[arrBPT.GetLength(0), 1];//Program.getFloat2dArray(dgvBPTWS);
-            computeThis(ref arrBPT, ref arrBPTPS, ref arrBPTWS, txtbx_pT.Text, PerformancePercent);
-            setDataToGridView(ref dgvBPT, arrBPT);
-            setDataToGridView(ref dgvBPTPS, arrBPTPS);
-            setDataToGridView(ref dgvBPTWS, arrBPTWS);
+                nums[0] = Program.safeParse(txtbx_p1.Text);
+                nums[1] = Program.safeParse(txtbx_p2.Text);
+                nums[2] = Program.safeParse(txtbx_p3.Text);
+                nums[3] = Program.safeParse(txtbx_p4.Text);
+                nums[4] = Program.safeParse(txtbx_p5.Text);
+                nums[5] = Program.safeParse(txtbx_p6.Text);
+                nums[6] = Program.safeParse(txtbx_p7.Text);
+                nums[7] = Program.safeParse(txtbx_p8.Text);
+                txtbx_pT.Text = Program.sum(nums).ToString();
+                //boys computation
+                float[,] arrBWW = Program.getFloat2dArray(dgvBWW);
+                float[,] arrBWWPS = new float[arrBWW.GetLength(0), 1];//Program.getFloat2dArray(dgvBWWPS);
+                float[,] arrBWWWS = new float[arrBWW.GetLength(0), 1];//Program.getFloat2dArray(dgvBWWWS);
+                computeThis(ref arrBWW, ref arrBWWPS, ref arrBWWWS, txtbx_wT.Text, WrittenWorkPercent);
+                setDataToGridView(ref dgvBWW, arrBWW);
+                setDataToGridView(ref dgvBWWPS, arrBWWPS);
+                setDataToGridView(ref dgvBWWWS, arrBWWWS);
 
-            float[,] arrBQA = Program.getFloat2dArray(dgvBQA);
-            float[,] arrBQAPS = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQAPS);
-            float[,] arrBQAWS = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQAWS);
-            computeThis(ref arrBQA, ref arrBQAPS, ref arrBQAWS, txtbx_qT.Text, QuarterlyPercent);
-            setDataToGridView(ref dgvBQA, arrBQA);
-            setDataToGridView(ref dgvBQAPS, arrBQAPS);
-            setDataToGridView(ref dgvBQAWS, arrBQAWS);
+                float[,] arrBPT = Program.getFloat2dArray(dgvBPT);
+                float[,] arrBPTPS = new float[arrBPT.GetLength(0), 1];//Program.getFloat2dArray(dgvBPTPS);
+                float[,] arrBPTWS = new float[arrBPT.GetLength(0), 1];//Program.getFloat2dArray(dgvBPTWS);
+                computeThis(ref arrBPT, ref arrBPTPS, ref arrBPTWS, txtbx_pT.Text, PerformancePercent);
+                setDataToGridView(ref dgvBPT, arrBPT);
+                setDataToGridView(ref dgvBPTPS, arrBPTPS);
+                setDataToGridView(ref dgvBPTWS, arrBPTWS);
 
-            float[,] arrBIG = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBIG);
-            float[,] arrBQG = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQG);
-            computeFinalGrade(arrBWWWS, arrBPTWS, arrBQAWS, ref arrBIG, ref arrBQG);
-            setDataToGridView(ref dgvBIG, arrBIG);
-            setDataToGridView(ref dgvBQG, arrBQG,500,500);
-            //girls computation
-            float[,] arrGWW = Program.getFloat2dArray(dgvGWW);
-            float[,] arrGWWPS = new float[arrGWW.GetLength(0), 1];//Program.getFloat2dArray(dgvGWWPS);
-            float[,] arrGWWWS = new float[arrGWW.GetLength(0), 1];//Program.getFloat2dArray(dgvGWWWS);
-            computeThis(ref arrGWW, ref arrGWWPS, ref arrGWWWS, txtbx_wT.Text, WrittenWorkPercent);
-            setDataToGridView(ref dgvGWW, arrGWW);
-            setDataToGridView(ref dgvGWWPS, arrGWWPS);
-            setDataToGridView(ref dgvGWWWS, arrGWWWS);
+                float[,] arrBQA = Program.getFloat2dArray(dgvBQA);
+                float[,] arrBQAPS = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQAPS);
+                float[,] arrBQAWS = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQAWS);
+                computeThis(ref arrBQA, ref arrBQAPS, ref arrBQAWS, txtbx_qT.Text, QuarterlyPercent);
+                setDataToGridView(ref dgvBQA, arrBQA);
+                setDataToGridView(ref dgvBQAPS, arrBQAPS);
+                setDataToGridView(ref dgvBQAWS, arrBQAWS);
 
-            float[,] arrGPT = Program.getFloat2dArray(dgvGPT);
-            float[,] arrGPTPS = new float[arrGPT.GetLength(0), 1];//Program.getFloat2dArray(dgvGPTPS);
-            float[,] arrGPTWS = new float[arrGPT.GetLength(0), 1];//Program.getFloat2dArray(dgvGPTWS);
-            computeThis(ref arrGPT, ref arrGPTPS, ref arrGPTWS, txtbx_pT.Text, PerformancePercent);
-            setDataToGridView(ref dgvGPT, arrGPT);
-            setDataToGridView(ref dgvGPTPS, arrGPTPS);
-            setDataToGridView(ref dgvGPTWS, arrGPTWS);
+                float[,] arrBIG = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBIG);
+                float[,] arrBQG = new float[arrBQA.GetLength(0), 1];//Program.getFloat2dArray(dgvBQG);
+                computeFinalGrade(arrBWWWS, arrBPTWS, arrBQAWS, ref arrBIG, ref arrBQG);
+                setDataToGridView(ref dgvBIG, arrBIG);
+                setDataToGridView(ref dgvBQG, arrBQG, 500, 500);
+                //girls computation
+                float[,] arrGWW = Program.getFloat2dArray(dgvGWW);
+                float[,] arrGWWPS = new float[arrGWW.GetLength(0), 1];//Program.getFloat2dArray(dgvGWWPS);
+                float[,] arrGWWWS = new float[arrGWW.GetLength(0), 1];//Program.getFloat2dArray(dgvGWWWS);
+                computeThis(ref arrGWW, ref arrGWWPS, ref arrGWWWS, txtbx_wT.Text, WrittenWorkPercent);
+                setDataToGridView(ref dgvGWW, arrGWW);
+                setDataToGridView(ref dgvGWWPS, arrGWWPS);
+                setDataToGridView(ref dgvGWWWS, arrGWWWS);
 
-            float[,] arrGQA = Program.getFloat2dArray(dgvGQA);
-            float[,] arrGQAPS = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQAPS);
-            float[,] arrGQAWS = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQAWS);
-            computeThis(ref arrGQA, ref arrGQAPS, ref arrGQAWS, txtbx_qT.Text, QuarterlyPercent);
-            setDataToGridView(ref dgvGQA, arrGQA);
-            setDataToGridView(ref dgvGQAPS, arrGQAPS);
-            setDataToGridView(ref dgvGQAWS, arrGQAWS);
+                float[,] arrGPT = Program.getFloat2dArray(dgvGPT);
+                float[,] arrGPTPS = new float[arrGPT.GetLength(0), 1];//Program.getFloat2dArray(dgvGPTPS);
+                float[,] arrGPTWS = new float[arrGPT.GetLength(0), 1];//Program.getFloat2dArray(dgvGPTWS);
+                computeThis(ref arrGPT, ref arrGPTPS, ref arrGPTWS, txtbx_pT.Text, PerformancePercent);
+                setDataToGridView(ref dgvGPT, arrGPT);
+                setDataToGridView(ref dgvGPTPS, arrGPTPS);
+                setDataToGridView(ref dgvGPTWS, arrGPTWS);
 
-            float[,] arrGIG = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGIG);
-            float[,] arrGQG = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQG);
-            computeFinalGrade(arrGWWWS, arrGPTWS, arrGQAWS, ref arrGIG, ref arrGQG);
-            setDataToGridView(ref dgvGIG, arrGIG);
-            setDataToGridView(ref dgvGQG, arrGQG, 500, 500);
+                float[,] arrGQA = Program.getFloat2dArray(dgvGQA);
+                float[,] arrGQAPS = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQAPS);
+                float[,] arrGQAWS = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQAWS);
+                computeThis(ref arrGQA, ref arrGQAPS, ref arrGQAWS, txtbx_qT.Text, QuarterlyPercent);
+                setDataToGridView(ref dgvGQA, arrGQA);
+                setDataToGridView(ref dgvGQAPS, arrGQAPS);
+                setDataToGridView(ref dgvGQAWS, arrGQAWS);
+
+                float[,] arrGIG = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGIG);
+                float[,] arrGQG = new float[arrGQA.GetLength(0), 1];//Program.getFloat2dArray(dgvGQG);
+                computeFinalGrade(arrGWWWS, arrGPTWS, arrGQAWS, ref arrGIG, ref arrGQG);
+                setDataToGridView(ref dgvGIG, arrGIG);
+                setDataToGridView(ref dgvGQG, arrGQG, 500, 500);
+            }
         }
 
         private void computeFinalGrade(float[,]ws1, float[,] ws2, float[,] ws3, ref float[,] ini, ref float[,] qg)
@@ -559,12 +561,32 @@ namespace GradingSystem
 
         private void manageCompute(object sender, DataGridViewCellEventArgs e)
         {
-            manageCompute(sender, e);
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
 
+        }
+        private Boolean dis = false;
+        private Boolean fdis = false;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (!fdis) {
+                dis = false;
+                ((Timer)sender).Enabled = false;
+            }else
+            {
+                fdis = false;
+            }
+        }
+
+        private void dgvBWW_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!dis) {
+            manageCompute(sender, e);
+            dis = true;
+            fdis = true;
+            timer1.Enabled = true; }
         }
     }
 }
