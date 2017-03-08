@@ -1,0 +1,59 @@
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe.config
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\bin\Debug\GradingSystem.pdb
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\bin\Debug\MySql.Data.dll
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csprojResolveAssemblyReference.cache
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.LoginForm.resources
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.Properties.Resources.resources
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csproj.GenerateResource.Cache
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.exe
+c:\users\zyrus\documents\visual studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.pdb
+C:\Users\Zyrus\Documents\Visual Studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.TeacherMainForm.resources
+C:\Users\Zyrus\Documents\Visual Studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradingSheet.resources
+C:\Users\Zyrus\Documents\Visual Studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddForm.resources
+C:\Users\Zyrus\Documents\Visual Studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddTeacherForm.resources
+C:\Users\Zyrus\Documents\Visual Studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.MainForm.resources
+C:\Users\Zyrus\Documents\Visual Studio 2015\Projects\GradingSystem\GradingSystem\obj\Debug\GradingSystem.Form1.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe.config
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.exe
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.pdb
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.pdb
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\bin\Debug\MySql.Data.dll
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csprojResolveAssemblyReference.cache
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddTeacherForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.LoginForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.MainForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.Properties.Resources.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csproj.GenerateResource.Cache
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe.config
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.exe
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.pdb
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csprojResolveAssemblyReference.cache
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AddTeacherForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ClassSchedForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradingSheetForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.LoginForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.MainForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.Properties.Resources.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.TeacherLoadingForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.csproj.GenerateResource.Cache
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.exe
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\bin\Debug\GradingSystem.pdb
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ClassSchedForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradingSheetForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.TeacherLoadingForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradesForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.GradesForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FinalRatingForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AuditTrailForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FacultyListForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FinalRatingForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ListForm.resources
+C:\Documents and Settings\Zyrus\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.StudentListForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.AuditTrailForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.FacultyListForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.ListForm.resources
+D:\Librarian\Documents\GradingSystem\GradingSystem\GradingSystem\obj\Debug\GradingSystem.StudentListForm.resources
