@@ -405,6 +405,7 @@ namespace GradingSystem
 
         private void quarterCmBx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            quarter = (quarterCmBx.SelectedIndex + 1).ToString();
             GradingSheet_Load(sender,e);
         }
 
