@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2017 at 10:36 AM
+-- Generation Time: Mar 09, 2017 at 12:59 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `student_all_subject_grade` (
 --
 
 INSERT INTO `student_all_subject_grade` (`student_all_subject_grade_ID`, `FILIPINO`, `ENGLISH`, `MATH`, `SCIENCE`, `AP`, `VALUES`, `MAPEH`, `TLE`, `student_id`) VALUES
-(1, 80, 85, 91, 89, 88, 87, 86, 85, 1),
-(2, 89, 88, 86, 87, 86, 85, 84, 83, 2);
+(1, 80, 85, 90, 89, 88, 87, 86, 85, 1),
+(2, 89, 88, 85, 87, 86, 85, 84, 83, 2);
 
 -- --------------------------------------------------------
 
@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS `student_finalgrade` (
 --
 
 INSERT INTO `student_finalgrade` (`student_FinalGrade_ID`, `1st_Grading`, `2nd_Grading`, `3rd_Grading`, `4th_Grading`, `student_ID`, `subject`) VALUES
-(1, 93, 90, 90, 90, 1, 'Math'),
-(2, 93, 90, 80, 80, 2, 'Math');
+(1, 90, 90, 90, 90, 1, 'MATH'),
+(2, 90, 90, 80, 80, 2, 'MATH');
 
 -- --------------------------------------------------------
 
@@ -121,17 +121,15 @@ CREATE TABLE IF NOT EXISTS `student_perf` (
   `subject` varchar(255) NOT NULL,
   `quarter_ID` int(11) NOT NULL,
   PRIMARY KEY (`perf_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=63 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `student_perf`
 --
 
 INSERT INTO `student_perf` (`perf_ID`, `student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) VALUES
-(59, 1, 20, 15, 15, 10, 15, 20, 15, 25, 'Math', 1),
-(60, 1, 20, 15, 15, 10, 15, 20, 20, 20, 'Math_total', 1),
-(61, 2, 15, 15, 15, 10, 15, 20, 15, 25, 'Math', 1),
-(62, 3, 0, 0, 0, 0, 0, 0, 0, 0, 'Math', 1);
+(11, 1, 20, 15, 15, 10, 15, 20, 15, 25, 'Math', 1),
+(12, 1, 0, 0, 0, 0, 0, 0, 0, 150, 'Math', 1);
 
 -- --------------------------------------------------------
 
@@ -174,17 +172,48 @@ CREATE TABLE IF NOT EXISTS `student_qa` (
   `subject` varchar(255) NOT NULL,
   `student_qa_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`student_qa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `student_qa`
 --
 
 INSERT INTO `student_qa` (`quarterly_ID`, `student_ID`, `quarterly_score`, `quarter_ID`, `subject`, `student_qa_id`) VALUES
-(0, 1, 5, 1, 'Math', 53),
-(0, 1, 10, 1, 'Math_total', 54),
-(0, 2, 6, 1, 'Math', 55),
-(0, 3, 0, 1, 'Math', 56);
+(0, 1, 0, 1, 'Math', 5),
+(0, 1, 1, 1, 'Math', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_subjgrade`
+--
+
+CREATE TABLE IF NOT EXISTS `student_subjgrade` (
+  `subjgrade_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `student_ID` int(11) NOT NULL,
+  `word_ID` int(11) NOT NULL,
+  `task_ID` int(11) NOT NULL,
+  `assess_ID` int(11) NOT NULL,
+  `initial_grade` float NOT NULL,
+  `quarterly_grade` float NOT NULL,
+  `quarter_ID` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  PRIMARY KEY (`subjgrade_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `student_subjgrade`
+--
+
+INSERT INTO `student_subjgrade` (`subjgrade_ID`, `student_ID`, `word_ID`, `task_ID`, `assess_ID`, `initial_grade`, `quarterly_grade`, `quarter_ID`, `subject`) VALUES
+(1, 1, 1, 1, 1, 84.27, 90, 1, 'Math'),
+(2, 1, 1, 1, 1, 84.27, 90, 2, 'Math'),
+(3, 1, 1, 1, 1, 84.27, 90, 3, 'Math'),
+(4, 1, 1, 1, 1, 84.27, 90, 4, 'Math'),
+(5, 2, 1, 1, 1, 84.27, 90, 1, 'Math'),
+(6, 2, 1, 1, 1, 84.27, 90, 2, 'Math'),
+(7, 2, 1, 1, 1, 84.27, 80, 3, 'Math'),
+(8, 2, 1, 1, 1, 84.27, 80, 4, 'Math');
 
 -- --------------------------------------------------------
 
@@ -206,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `student_ww` (
   `subject` varchar(255) NOT NULL,
   `quarter_ID` int(11) NOT NULL,
   PRIMARY KEY (`written_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=71 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `student_ww`
@@ -216,10 +245,8 @@ INSERT INTO `student_ww` (`written_ID`, `student_ID`, `WWS1`, `WWS2`, `WWS3`, `W
 (2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 0),
 (3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 0),
 (4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 0),
-(67, 1, 20, 15, 15, 10, 15, 20, 15, 25, 'Math', 1),
-(68, 1, 20, 15, 15, 10, 15, 20, 15, 25, 'Math_total', 1),
-(69, 2, 15, 15, 15, 10, 15, 20, 15, 25, 'Math', 1),
-(70, 3, 20, 0, 0, 0, 0, 0, 0, 0, 'Math', 1);
+(18, 1, 20, 15, 15, 10, 15, 20, 15, 25, 'Math', 1),
+(19, 1, 0, 0, 0, 0, 0, 0, 0, 150, 'Math', 1);
 
 -- --------------------------------------------------------
 
