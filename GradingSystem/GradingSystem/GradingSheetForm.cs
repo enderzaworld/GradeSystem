@@ -600,6 +600,7 @@ namespace GradingSystem
         }
         private void btn_save_Click(object sender, EventArgs e)
         {
+            manageCompute(sender, e);
             float[] arrWWT = new float[8];
             arrWWT[0] = Program.safeParse(txtbx_w1.Text);
             arrWWT[1] = Program.safeParse(txtbx_w2.Text);
@@ -689,6 +690,134 @@ namespace GradingSystem
             sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
 "VALUES('" + arr[0, 0] + "', '" + arrQAT + "','" + Subject + "_total', '" + quarter + "')";
             Program.doNonQuery(sql);//-----------------------------------------
+            
+            float[,] arrBQG = getFloat2dArray(dgvBQG);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                MySqlDataReader reader = Program.GetReaderFromQuery("SELECT `student_FinalGrade_ID`, `1st_Grading`, `2nd_Grading`, `3rd_Grading`, `4th_Grading`, `student_ID`, `subject` FROM `student_finalgrade` WHERE `student_ID` = '" + arr[r, 0] + "' AND `subject`= '" + Subject + "'");
+                if (reader.Read())
+                {
+                    string id = reader.GetString(reader.GetOrdinal("student_FinalGrade_ID"));
+                    string sqlu = "UPDATE `student_finalgrade` SET ";
+                    switch (quarter)
+                    {
+                        default: break;
+                        case "1":
+                            Console.WriteLine(r);
+                            sqlu += " `1st_Grading`= '" + Program.safeParse(arrBQG,r, 0) + "', ";
+                            break;
+                        case "2":
+                            sqlu += " `2nd_Grading`= '" + Program.safeParse(arrBQG, r, 0) + "', ";
+                            break;
+                        case "3":
+                            sqlu += " `3rd_Grading`= '" + Program.safeParse(arrBQG, r, 0) + "', ";
+                            break;
+                        case "4":
+                            sqlu += " `4th_Grading`= '" + Program.safeParse(arrBQG, r, 0) + "', ";
+                            break;
+                    }
+                    sqlu += " `student_ID`= '" + arr[r, 0] + "', `subject`= '" + Subject + "' WHERE `student_FinalGrade_ID`='" + id + "'";
+                    Program.doNonQuery(sqlu);
+                }
+                else
+                {
+                    string sqlu = "INSERT INTO `student_finalgrade`(";
+                    switch (quarter)
+                    {
+                        default: break;
+                        case "1":
+                            sqlu += " `1st_Grading`";
+                            break;
+                        case "2":
+                            sqlu += " `2nd_Grading`";
+                            break;
+                        case "3":
+                            sqlu += " `3rd_Grading`";
+                            break;
+                        case "4":
+                            sqlu += " `4th_Grading`";
+                            break;
+                    }
+                    sqlu += ", `student_ID`,`subject`) VALUES('" + Program.safeParse(arrBQG, r, 0) + "', '" + arr[r, 0] + "',  '" + Subject + "') ";
+                }
+                reader = Program.GetReaderFromQuery("SELECT `student_all_subject_grade_ID`, `FILIPINO`, `ENGLISH`, `MATH`, `SCIENCE`, `AP`, `VALUES`, `MAPEH`, `TLE`, `student_id` FROM `student_all_subject_grade` WHERE `student_ID` = '" + arr[r, 0] + "'"); if (reader.Read())
+                {
+                    string id = reader.GetString(reader.GetOrdinal("student_all_subject_grade_ID"));
+                    reader = Program.GetReaderFromQuery("SELECT `student_FinalGrade_ID`, `1st_Grading`, `2nd_Grading`, `3rd_Grading`, `4th_Grading`, `student_ID`, `subject` FROM `student_finalgrade` WHERE `student_ID` = '" + arr[r, 0] + "' AND `subject`= '" + Subject + "'");
+                    string sqlu = "UPDATE `student_all_subject_grade` SET ";
+                    if (reader.Read())
+                    {
+                        float g1 = Program.safeParse(reader.GetString(reader.GetOrdinal("1st_Grading")));
+                        float g2 = Program.safeParse(reader.GetString(reader.GetOrdinal("2nd_Grading")));
+                        float g3 = Program.safeParse(reader.GetString(reader.GetOrdinal("3rd_Grading")));
+                        float g4 = Program.safeParse(reader.GetString(reader.GetOrdinal("4th_Grading")));
+                    float ave = ((g1 + g2 + g3 + g4) / 4);
+                    switch (Subject)
+                    {
+                        default: break;
+                        case "Math":
+                            sqlu += " `MATH`= '" + ave + "', ";
+                            break;
+                        case "English":
+                            sqlu += " `ENGLISH`= '" + ave + "', ";
+                            break;
+                        case "Science":
+                            sqlu += " `SCIENCE`= '" + ave + "', ";
+                            break;
+                        case "Filipino":
+                            sqlu += " `FILIPINO`= '" + ave + "', ";
+                            break;
+                        case "S.S.":
+                            sqlu += " `VALUES`= '" + ave + "', ";
+                            break;
+                        case "M.A.P.E.H":
+                            sqlu += " `MAPEH`= '" + ave + "', ";
+                            break;
+                        case "T.L.E":
+                            sqlu += " `TLE`= '" + ave + "', ";
+                            break;
+                        case "AP":
+                            sqlu += " `AP`= '" + ave + "', ";
+                            break;
+                    }
+                    sqlu += " `student_ID`= '" + arr[r, 0] + "' WHERE `student_all_subject_grade_ID`='" + id + "'";
+                    Program.doNonQuery(sqlu);
+                    }
+                }
+                else
+                {
+                    string sqlu = "INSERT INTO `student_all_subject_grade`(";
+                    switch (Subject)
+                    {
+                        default: break;
+                        case "Math":
+                            sqlu += " `MATH`";
+                            break;
+                        case "English":
+                            sqlu += " `ENGLISH`";
+                            break;
+                        case "Science":
+                            sqlu += " `SCIENCE`";
+                            break;
+                        case "Filipino":
+                            sqlu += " `FILIPINO`";
+                            break;
+                        case "S.S.":
+                            sqlu += " `VALUES`";
+                            break;
+                        case "M.A.P.E.H":
+                            sqlu += " `MAPEH`";
+                            break;
+                        case "T.L.E":
+                            sqlu += " `TLE`";
+                            break;
+                        case "AP":
+                            sqlu += " `AP`";
+                            break;
+                    }
+                    sqlu += ", `student_ID`) VALUES('" + arrBQG[r, 0] + "', '" + arr[r, 0] + "') ";
+                }
+            }
 
             //girls in
             dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Female' AND `student_Level` like 'Grade " + Grade + "' AND `student_Section` = '" + section + "' ");
@@ -737,7 +866,132 @@ namespace GradingSystem
 "VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrGQA, r, 0) + "','" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
             }//-----------------------------------------
-
+            float[,] arrGQG = getFloat2dArray(dgvGQG);
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                MySqlDataReader reader = Program.GetReaderFromQuery("SELECT `student_FinalGrade_ID`, `1st_Grading`, `2nd_Grading`, `3rd_Grading`, `4th_Grading`, `student_ID`, `subject` FROM `student_finalgrade` WHERE `student_ID` = '" + arr[r, 0] + "' AND `subject`= '" + Subject + "'");
+                if (reader.Read())
+                {
+                    string id = reader.GetString(reader.GetOrdinal("student_FinalGrade_ID"));
+                    string sqlu = "UPDATE `student_finalgrade` SET ";
+                    switch (quarter)
+                    {
+                        default: break;
+                        case "1":
+                            sqlu += " `1st_Grading`= '" + Program.safeParse(arrGQG, r, 0) + "', ";
+                            break;
+                        case "2":
+                            sqlu += " `2nd_Grading`= '" + Program.safeParse(arrGQG, r, 0) + "', ";
+                            break;
+                        case "3":
+                            sqlu += " `3rd_Grading`= '" + Program.safeParse(arrGQG, r, 0) + "', ";
+                            break;
+                        case "4":
+                            sqlu += " `4th_Grading`= '" + Program.safeParse(arrGQG, r, 0) + "', ";
+                            break;
+                    }
+                    sqlu += " `student_ID`= '" + arr[r, 0] + "', `subject`= '" + Subject + "' WHERE `student_FinalGrade_ID`='" + id + "'";
+                    Program.doNonQuery(sqlu);
+                }
+                else
+                {
+                    string sqlu = "INSERT INTO `student_finalgrade`(";
+                    switch (quarter)
+                    {
+                        default: break;
+                        case "1":
+                            sqlu += " `1st_Grading`";
+                            break;
+                        case "2":
+                            sqlu += " `2nd_Grading`";
+                            break;
+                        case "3":
+                            sqlu += " `3rd_Grading`";
+                            break;
+                        case "4":
+                            sqlu += " `4th_Grading`";
+                            break;
+                    }
+                    sqlu += ", `student_ID`,`subject`) VALUES('" + Program.safeParse(arrGQG, r, 0) + "', '" + arr[r, 0] + "',  '" + Subject + "') ";
+                }
+                reader = Program.GetReaderFromQuery("SELECT `student_all_subject_grade_ID`, `FILIPINO`, `ENGLISH`, `MATH`, `SCIENCE`, `AP`, `VALUES`, `MAPEH`, `TLE`, `student_id` FROM `student_all_subject_grade` WHERE `student_ID` = '" + arr[r, 0] + "'"); if (reader.Read())
+                {
+                    string id = reader.GetString(reader.GetOrdinal("student_all_subject_grade_ID"));
+                    reader = Program.GetReaderFromQuery("SELECT `student_FinalGrade_ID`, `1st_Grading`, `2nd_Grading`, `3rd_Grading`, `4th_Grading`, `student_ID`, `subject` FROM `student_finalgrade` WHERE `student_ID` = '" + arr[r, 0] + "' AND `subject`= '" + Subject + "'");
+                    string sqlu = "UPDATE `student_all_subject_grade` SET ";
+                    if (reader.Read())
+                    {
+                        float g1 = Program.safeParse(reader.GetString(reader.GetOrdinal("1st_Grading")));
+                        float g2 = Program.safeParse(reader.GetString(reader.GetOrdinal("2nd_Grading")));
+                        float g3 = Program.safeParse(reader.GetString(reader.GetOrdinal("3rd_Grading")));
+                        float g4 = Program.safeParse(reader.GetString(reader.GetOrdinal("4th_Grading")));
+                        float ave = ((g1 + g2 + g3 + g4) / 4);
+                        switch (Subject)
+                        {
+                            default: break;
+                            case "Math":
+                                sqlu += " `MATH`= '" + ave + "', ";
+                                break;
+                            case "English":
+                                sqlu += " `ENGLISH`= '" + ave + "', ";
+                                break;
+                            case "Science":
+                                sqlu += " `SCIENCE`= '" + ave + "', ";
+                                break;
+                            case "Filipino":
+                                sqlu += " `FILIPINO`= '" + ave + "', ";
+                                break;
+                            case "S.S.":
+                                sqlu += " `VALUES`= '" + ave + "', ";
+                                break;
+                            case "M.A.P.E.H":
+                                sqlu += " `MAPEH`= '" + ave + "', ";
+                                break;
+                            case "T.L.E":
+                                sqlu += " `TLE`= '" + ave + "', ";
+                                break;
+                            case "AP":
+                                sqlu += " `AP`= '" + ave + "', ";
+                                break;
+                        }
+                        sqlu += " `student_ID`= '" + arr[r, 0] + "' WHERE `student_all_subject_grade_ID`='" + id + "'";
+                        Program.doNonQuery(sqlu);
+                    }
+                }
+                else
+                {
+                    string sqlu = "INSERT INTO `student_all_subject_grade`(";
+                    switch (Subject)
+                    {
+                        default: break;
+                        case "Math":
+                            sqlu += " `MATH`";
+                            break;
+                        case "English":
+                            sqlu += " `ENGLISH`";
+                            break;
+                        case "Science":
+                            sqlu += " `SCIENCE`";
+                            break;
+                        case "Filipino":
+                            sqlu += " `FILIPINO`";
+                            break;
+                        case "S.S.":
+                            sqlu += " `VALUES`";
+                            break;
+                        case "M.A.P.E.H":
+                            sqlu += " `MAPEH`";
+                            break;
+                        case "T.L.E":
+                            sqlu += " `TLE`";
+                            break;
+                        case "AP":
+                            sqlu += " `AP`";
+                            break;
+                    }
+                    sqlu += ", `student_ID`) VALUES('" + Program.safeParse(arrGQG, r, 0) + "', '" + arr[r, 0] + "') ";
+                }
+            }
             MessageBox.Show("Saved I suppose");
         }
 
@@ -784,3 +1038,6 @@ namespace GradingSystem
         }
     }
 }
+/*
+ too many bugs but I suppose this should work
+     */
