@@ -506,6 +506,10 @@ namespace GradingSystem
                     {
                         sum = 0;
                     }
+                    if (arr.GetLength(1) == 1)
+                    {
+                        sum += arr[x, i];
+                    }
                     if (i + 1 >= arr.GetLength(1))
                     {
                         arr[x, i] = sum;
