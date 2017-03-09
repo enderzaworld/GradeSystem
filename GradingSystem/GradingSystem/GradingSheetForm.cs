@@ -391,11 +391,19 @@ namespace GradingSystem
             FinalRatingForm frf = new FinalRatingForm(Grade, quarter, Subject, teacher);
             frf.Show();
         }
-
+        private Boolean flg = false;
         private void quarterCmBx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            quarter = (quarterCmBx.SelectedIndex + 1).ToString();
-            GradingSheet_Load(sender,e);
+            if (flg) {
+                quarter = (quarterCmBx.SelectedIndex + 1).ToString();
+
+                GradingSheetForm gsf = new GradingSheetForm(Grade, quarter, Subject, teacher, section);
+                gsf.Show();
+                Close();
+            }else
+            {
+                flg = true;
+            }
         }
 
         private void manageCompute(object sender, EventArgs e) {
