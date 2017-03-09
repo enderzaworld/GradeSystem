@@ -74,39 +74,39 @@ namespace GradingSystem
 
         private void GradingSheet_Load(object sender, EventArgs e)
         {
+            loadMale();
+            loadFemale();
             MySqlDataReader wT = GetWTotal();
             if (wT.Read())
             {
-                txtbx_w1.Text = wT.GetString(0);
-                txtbx_w2.Text = wT.GetString(1);
-                txtbx_w3.Text = wT.GetString(2);
-                txtbx_w4.Text = wT.GetString(3);
-                txtbx_w5.Text = wT.GetString(4);
-                txtbx_w6.Text = wT.GetString(5);
-                txtbx_w7.Text = wT.GetString(6);
-                txtbx_w8.Text = wT.GetString(7);
-                txtbx_wT.Text = wT.GetString(8);
+                txtbx_w1.Text = wT.GetString(wT.GetOrdinal("WWS1"));
+                txtbx_w2.Text = wT.GetString(wT.GetOrdinal("WWS2"));
+                txtbx_w3.Text = wT.GetString(wT.GetOrdinal("WWS3"));
+                txtbx_w4.Text = wT.GetString(wT.GetOrdinal("WWS4"));
+                txtbx_w5.Text = wT.GetString(wT.GetOrdinal("WWS5"));
+                txtbx_w6.Text = wT.GetString(wT.GetOrdinal("WWS6"));
+                txtbx_w7.Text = wT.GetString(wT.GetOrdinal("WWS7"));
+                txtbx_w8.Text = wT.GetString(wT.GetOrdinal("WWS8"));
+                txtbx_wT.Text = wT.GetString(wT.GetOrdinal("TOTAL"));
             }
             MySqlDataReader pT = GetPTotal();
             if (pT.Read())
             {
-                txtbx_p1.Text = pT.GetString(0);
-                txtbx_p2.Text = pT.GetString(1);
-                txtbx_p3.Text = pT.GetString(2);
-                txtbx_p4.Text = pT.GetString(3);
-                txtbx_p5.Text = pT.GetString(4);
-                txtbx_p6.Text = pT.GetString(5);
-                txtbx_p7.Text = pT.GetString(6);
-                txtbx_p8.Text = pT.GetString(7);
-                txtbx_pT.Text = pT.GetString(8);
+                txtbx_p1.Text = pT.GetString(pT.GetOrdinal("PTS1"));
+                txtbx_p2.Text = pT.GetString(pT.GetOrdinal("PTS2"));
+                txtbx_p3.Text = pT.GetString(pT.GetOrdinal("PTS3"));
+                txtbx_p4.Text = pT.GetString(pT.GetOrdinal("PTS4"));
+                txtbx_p5.Text = pT.GetString(pT.GetOrdinal("PTS5"));
+                txtbx_p6.Text = pT.GetString(pT.GetOrdinal("PTS6"));
+                txtbx_p7.Text = pT.GetString(pT.GetOrdinal("PTS6"));
+                txtbx_p8.Text = pT.GetString(pT.GetOrdinal("PTS7"));
+                txtbx_pT.Text = pT.GetString(pT.GetOrdinal("TOTAL"));
             }
             MySqlDataReader qT = GetQTotal();
             if (qT.Read())
             {
-                txtbx_qT.Text = qT.GetString(0);
+                txtbx_qT.Text = qT.GetString(qT.GetOrdinal("quarterly_score"));
             }
-            loadMale();
-            loadFemale();
             //manageCompute(sender,e);
         }
 
@@ -496,8 +496,36 @@ namespace GradingSystem
             int i=0, x;
             for (x = 0; x < ws1.GetLength(0); x++)
             {
-                ini[x, i] = ws1[x, i] + ws2[x, i] + ws3[x, i];
-                qg[x,i] = Program.transmutate(ini[x, i]);
+                float ws11, ws21, ws31;
+                try
+                {
+                    ws11 = ws1[x,i];
+                }
+                catch
+                {
+                    ws11 = 0;
+                }
+                try
+                {
+                    ws21 = ws2[x, i];
+                }
+                catch
+                {
+                    ws21 = 0;
+                }
+                try
+                {
+                    ws31 = ws3[x, i];
+                }
+                catch
+                {
+                    ws31 = 0;
+                }try
+                {
+                    ini[x, i] = ws11 + ws21 + ws31;
+                    qg[x, i] = Program.transmutate(ini[x, i]);
+                }
+                catch { }
             }
         }
 
@@ -570,7 +598,6 @@ namespace GradingSystem
                     arr2d[x, i] = Program.safeParse(v.Rows[x].Cells[i].Value.ToString()); 
             return arr2d;
         }
-
         private void btn_save_Click(object sender, EventArgs e)
         {
             float[] arrWWT = new float[8];
@@ -605,25 +632,26 @@ namespace GradingSystem
             float[,] arrGQA = getFloat2dArray(dgvGQA);
 
             //boys in
-            dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Male' AND `student_Level` like 'Grade 8' AND `student_Section` = 'Section 1' ");
+            dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Male' AND `student_Level` like 'Grade " + Grade + "' AND `student_Section` = '" + section + "' ");
 
             float[,] arr = getFloat2dArray(dataGridView1);
             String toDelete = "DELETE FROM `student_ww` WHERE `student_ID` IN (";
-            for (int r=0; r<arr.GetLength(0) ;r++)
+            for (int r = 0; r < arr.GetLength(0); r++)
             {
-                if (r + 1 >= arr.GetLength(0)){ toDelete += arr[r,0]+""; }
-                else { toDelete += arr[r, 0]+","; }
+                if (r + 1 >= arr.GetLength(0)) { toDelete += arr[r, 0] + ""; }
+                else { toDelete += arr[r, 0] + ","; }
             }
-            toDelete+= ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
-            if(arr.GetLength(0)>0) Program.doNonQuery(toDelete);
+            toDelete += ") AND (`subject` = '" + Subject + "' OR `subject` = '" + Subject + "_total') AND `quarter_ID` = '" + quarter + "'";
+            if (arr.GetLength(0) > 0) Program.doNonQuery(toDelete);
             String sql;
-            for (int r = 0; r < arr.GetLength(0); r++){
-                sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) "+
-"VALUES('"+arr[r,0]+"', '"+ arrBWW[r,0]+ "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject+"', '"+quarter+"')";
+            for (int r = 0; r < arr.GetLength(0); r++)
+            {
+                sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
+"VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrBWW, r, 0) + "', '" + Program.safeParse(arrBWW, r, 1) + "', '" + Program.safeParse(arrBWW, r, 2) + "', '" + Program.safeParse(arrBWW, r, 3) + "', '" + Program.safeParse(arrBWW, r, 4) + "', '" + Program.safeParse(arrBWW, r, 5) + "', '" + Program.safeParse(arrBWW, r, 6) + "', '" + Program.safeParse(arrBWW, r, 7) + "', '" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
             }
             sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[0, 0] + "', '" + Program.safeParse(arrWWT, 0) + "', '" + Program.safeParse(arrWWT, 1) + "', '" + Program.safeParse(arrWWT, 2) + "', '" + Program.safeParse(arrWWT, 3) + "', '" + Program.safeParse(arrWWT, 4) + "', '" + Program.safeParse(arrWWT, 5) + "', '" + Program.safeParse(arrWWT, 6) + "', '" + Program.safeParse(arrWWT, 7) + "', '" + Subject + "_total', '" + quarter + "')";
             Program.doNonQuery(sql);
             //----------------------------------------------------
             toDelete = "DELETE FROM `student_perf` WHERE `student_ID` IN (";
@@ -637,11 +665,11 @@ namespace GradingSystem
             for (int r = 0; r < arr.GetLength(0); r++)
             {
                 sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[r, 0] + "', '" + arrBWW[r, 0] + "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrBPT, r, 0) + "', '" + Program.safeParse(arrBPT, r, 1) + "', '" + Program.safeParse(arrBPT, r, 2) + "', '" + Program.safeParse(arrBPT, r, 3) + "', '" + Program.safeParse(arrBPT, r, 4) + "', '" + Program.safeParse(arrBPT, r, 5) + "', '" + Program.safeParse(arrBPT, r, 6) + "', '" + Program.safeParse(arrBPT, r, 7) + "', '" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
             }
             sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[0, 0] + "', '" + Program.safeParse(arrPTT, 0) + "', '" + Program.safeParse(arrPTT, 1) + "', '" + Program.safeParse(arrPTT, 2) + "', '" + Program.safeParse(arrPTT, 3) + "', '" + Program.safeParse(arrPTT, 4) + "', '" + Program.safeParse(arrPTT, 5) + "', '" + Program.safeParse(arrPTT, 6) + "', '" + Program.safeParse(arrPTT, 7) + "', '" + Subject + "_total', '" + quarter + "')";
             Program.doNonQuery(sql);//-----------------------------------------
             //----------------------------------------------------
             toDelete = "DELETE FROM `student_qa` WHERE `student_ID` IN (";
@@ -655,15 +683,15 @@ namespace GradingSystem
             for (int r = 0; r < arr.GetLength(0); r++)
             {
                 sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
-"VALUES('" + arr[r, 0] + "', '" + arrBQA[r, 0]+"','" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrBQA, r, 0) + "','" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
             }
             sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
-"VALUES('" + arr[0, 0] + "', '" + arrQAT + "','" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[0, 0] + "', '" + arrQAT + "','" + Subject + "_total', '" + quarter + "')";
             Program.doNonQuery(sql);//-----------------------------------------
 
             //girls in
-            dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Male' AND `student_Level` like 'Grade 8' AND `student_Section` = 'Section 1' ");
+            dataGridView1.DataSource = Program.GetDataFromQuery("SELECT `student_ID` FROM `student_profile` WHERE `Student_Sex` like 'Female' AND `student_Level` like 'Grade " + Grade + "' AND `student_Section` = '" + section + "' ");
             arr = getFloat2dArray(dataGridView1);
             toDelete = "DELETE FROM `student_ww` WHERE `student_ID` IN (";
             for (int r = 0; r < arr.GetLength(0); r++)
@@ -676,12 +704,9 @@ namespace GradingSystem
             for (int r = 0; r < arr.GetLength(0); r++)
             {
                 sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[r, 0] + "', '" + arrBWW[r, 0] + "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrGWW, r, 0) + "', '" + Program.safeParse(arrGWW, r, 1) + "', '" + Program.safeParse(arrGWW, r, 2) + "', '" + Program.safeParse(arrGWW, r, 3) + "', '" + Program.safeParse(arrGWW, r, 4) + "', '" + Program.safeParse(arrGWW, r, 5) + "', '" + Program.safeParse(arrGWW, r, 6) + "', '" + Program.safeParse(arrGWW, r, 7) + "', '" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
             }
-            sql = "INSERT INTO `student_ww`(`student_ID`, `WWS1`, `WWS2`, `WWS3`, `WWS4`, `WWS5`, `WWS6`, `WWS7`, `WWS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
-            Program.doNonQuery(sql);
             //----------------------------------------------------
             toDelete = "DELETE FROM `student_perf` WHERE `student_ID` IN (";
             for (int r = 0; r < arr.GetLength(0); r++)
@@ -694,12 +719,9 @@ namespace GradingSystem
             for (int r = 0; r < arr.GetLength(0); r++)
             {
                 sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[r, 0] + "', '" + arrBWW[r, 0] + "', '" + arrBWW[r, 1] + "', '" + arrBWW[r, 2] + "', '" + arrBWW[r, 3] + "', '" + arrBWW[r, 4] + "', '" + arrBWW[r, 5] + "', '" + arrBWW[r, 6] + "', '" + arrBWW[r, 7] + "', '" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrGPT, r, 0) + "', '" + Program.safeParse(arrGPT, r, 1) + "', '" + Program.safeParse(arrGPT, r, 2) + "', '" + Program.safeParse(arrGPT, r, 3) + "', '" + Program.safeParse(arrGPT, r, 4) + "', '" + Program.safeParse(arrGPT, r, 5) + "', '" + Program.safeParse(arrGPT, r, 6) + "', '" + Program.safeParse(arrGPT, r, 7) + "', '" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
-            }
-            sql = "INSERT INTO `student_perf`(`student_ID`, `PTS1`, `PTS2`, `PTS3`, `PTS4`, `PTS5`, `PTS6`, `PTS7`, `PTS8`, `subject`, `quarter_ID`) " +
-"VALUES('" + arr[0, 0] + "', '" + arrWWT[0] + "', '" + arrWWT[1] + "', '" + arrWWT[2] + "', '" + arrWWT[3] + "', '" + arrWWT[4] + "', '" + arrWWT[5] + "', '" + arrWWT[6] + "', '" + arrWWT[7] + "', '" + Subject + "', '" + quarter + "')";
-            Program.doNonQuery(sql);//-----------------------------------------
+            }//-----------------------------------------
             //----------------------------------------------------
             toDelete = "DELETE FROM `student_qa` WHERE `student_ID` IN (";
             for (int r = 0; r < arr.GetLength(0); r++)
@@ -712,23 +734,22 @@ namespace GradingSystem
             for (int r = 0; r < arr.GetLength(0); r++)
             {
                 sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
-"VALUES('" + arr[r, 0] + "', '" + arrBQA[r, 0] + "','" + Subject + "', '" + quarter + "')";
+"VALUES('" + arr[r, 0] + "', '" + Program.safeParse(arrGQA, r, 0) + "','" + Subject + "', '" + quarter + "')";
                 Program.doNonQuery(sql);
-            }
-            sql = "INSERT INTO `student_qa`(`student_ID`, `quarterly_score`,`subject`, `quarter_ID`) " +
-"VALUES('" + arr[0, 0] + "', '" + arrQAT + "','" + Subject + "', '" + quarter + "')";
-            Program.doNonQuery(sql);//-----------------------------------------
+            }//-----------------------------------------
 
-            MessageBox.Show("Saved I suppose this is from line 714 at GradingSheetForm.cs and I Just lost most of my life here");
+            MessageBox.Show("Saved I suppose");
         }
 
         private Boolean dis = true;
         private Boolean fdis = true;
+        private Boolean first = true;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (!fdis) {
                 dis = false;
                 timer1.Enabled = false;
+                if (first) { manageCompute(sender, e); first = false; }
                 checkData(dgvBName, dgvBWW, 9);
                 resizeDGV(dgvBWW);
                 

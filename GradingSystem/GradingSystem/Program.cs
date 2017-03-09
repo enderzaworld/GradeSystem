@@ -80,6 +80,42 @@ namespace GradingSystem
             return reader;
         }
 
+        static public float safeParse(float[,] str,int n1,int n2)
+        {
+            try
+            {
+                return float.Parse(str[n1,n2].ToString());
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        static public float safeParse(float[] str, int n1)
+        {
+            try
+            {
+                return float.Parse(str[n1].ToString());
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        static public float safeParse(float str)
+        {
+            try
+            {
+                return float.Parse(str.ToString());
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         static public float safeParse(String str)
         {
             try
